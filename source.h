@@ -35,3 +35,24 @@ void default_league_settings(){                                                 
     records.drawn = 1;
     records.lost = 0;
 }
+
+void teams_file(){                                                              //read 'teams.txt' file
+    int i;
+    FILE *fp=fopen("teams.txt","r");                                         //open file teams.txt
+    if(fp == NULL)                                                              //checking if the file is exist or not
+        printf("Unable to open the file.\nPlease create a file and try again.");
+    
+    for(i=0;i<26;i++)                                                           //save teams name to struct
+        fscanf(fp,"%s",record[i].longname);
+}
+
+void teams_file_point(){
+    int i;
+    FILE *fp1=fopen("teams.txt","r");
+    if(fp1 == NULL)
+        printf("Unable to open the file.\nPlease create a file and try again.");
+
+    for(i=0;i<26;i++)//save teams name to struct
+        fscanf(fp1,"%s",record[i].longname_point);
+
+}
