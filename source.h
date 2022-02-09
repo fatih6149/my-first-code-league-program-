@@ -28,3 +28,10 @@ struct league{
     char longname[12];
     char longname_point[12];
 }records, record[MAX];
+
+void default_league_settings(){                                                 //default league settings
+    records.teams_number = 10;
+    records.win = 3;
+    records.drawn = 1;
+    records.lost = 0;
+}
