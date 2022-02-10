@@ -21,6 +21,8 @@ int main(){
         {
             case 1: league_settings();
             break;
+            case 2: fixtures();
+            break;
         }
 
     }while(selection != 5);

@@ -126,3 +126,125 @@ void league_settings(){//changing the league settings
         printf("===============================\n");
     }
 }
+
+void fixtures(){
+    
+    int selection;
+
+    printf("===============================\nTo take the fixtures from file (matches.txt): 1\n");
+    printf("To enter the fixtures from keyboard: 2\n");
+    printf("Enter a choice: ");
+    scanf("%d",&selection);
+    while (selection != 1 && selection !=2){//not pressing 1 or 2, it will give you an error
+        printf("===============================\nYou pressed wrongly!!!\n");
+        printf("===============================\nEnter: 1 or 2\n");
+        scanf("%d", &selection);
+    }//end of while error
+
+    if(selection ==1){//selection to read the fixtures from file (matches.txt)
+        FILE *ffix;
+        ffix=fopen("matches.txt","r");
+        if(ffix == NULL){
+            printf("Unable to open the file.\nPlease create a file and try again.");
+        }
+        printf("===============================\n");
+        printf("NOT: If the match played before, it will not effect on the table.\n");
+        printf("NOT: A team can not play with itself.\n");
+        int count;
+        int i;
+        for(count=0;count<records.teams_number;count++){//looping as much as team numbers
+            fscanf(ffix," %c %d %c %d",&records.team1,&records.team1score,&records.team2,&records.team2score);//take input from file
+
+            for(i = 0; i <= records.teams_number; i++){
+                if(records.team1 == records.team2){//checking a fixture of playing with itself
+                    break;
+                }//end of fixture of playing with itself
+                if(record[i].host == records.team1 && record[i].guest == records.team2){//checking of error of playing the match again
+                    break;
+                }//end of error of playing the match again
+                update_table_score(i);
+            }//end of for of looping as much as team numbers
+            record[records.counter].host=records.team1;//save the entered team1 to the array of the struct
+            record[records.counter].guest=records.team2;//save the entered team2 to the array of the struct
+            records.counter++;//save the location of fixtures
+        }//end of looping as much as team numbers
+        printf("The results have been successfully processed.\n");
+    }//end of reading the fixtures from file
+
+    //========================================================
+	int j;
+    if(selection==2){//selection to enter the fixtures from keyboard
+        int fixnum;
+        printf("===============================\nHow many fixtures do you want to enter ?\n= ");
+        scanf("%d", &fixnum);//number of fixtures
+        printf("Enter the fixtures:\n");
+        for(j = 0; j < fixnum; j++){//looping as much as fixnum
+            printf(" ");
+            scanf(" %c %d %c %d", &records.team1, &records.team1score, &records.team2, &records.team2score);//take input from keyboard
+            int i;
+            for(i = 0; i <= records.teams_number; i++){//looping as much as team numbers
+                if(records.team1 == records.team2){//checking a fixture of playing with itself
+                    printf("A team can not play with himself!!!\n");
+                    break;
+                }//end of fixture of playing with itself
+                if(record[i].host == records.team1 && record[i].guest == records.team2){//checking of error of playing the match again
+                    printf("This match played before!!!\n");
+                    break;
+                }//end of error of playing the match again
+                update_table_score(i);
+            }//end of for of looping as much as team numbers
+            record[records.counter].host=records.team1;//save the entered team1 to the array of the struct
+            record[records.counter].guest=records.team2;//save the entered team2 to the array of the struct
+            records.counter++;//save the location of fixtures
+        }//end of fixnum
+    }//end of entering fixture from keyboard
+
+}
+
+void update_table_score(int i){
+    if(i == records.teams_number){//after finishing of checking the errors. it will come to this if and begin processing on the table.
+        if(records.team1score > records.team2score){//if of team1score > team2score
+            records.tempav = records.team1score - records.team2score;
+            record[records.team1-65].GF += records.team1score;
+            record[records.team2-65].GF += records.team2score;
+            record[records.team1-65].GD += records.tempav;
+            record[records.team2-65].GD -= records.tempav;
+            record[records.team1-65].W += 1;
+            record[records.team2-65].L += 1;
+            record[records.team1-65].MP += 1;
+            record[records.team2-65].MP += 1;
+            record[records.team1-65].PTS += records.win;
+            record[records.team2-65].PTS += records.lost;
+            record[records.team1-65].GA += records.team2score;
+            record[records.team2-65].GA += records.team1score;
+        }//end of if of team1score > team2score
+        else if(records.team2score > records.team1score){//if of team1score < team2score
+            records.tempav = records.team2score - records.team1score;
+            record[records.team1-65].GF += records.team1score;
+            record[records.team2-65].GF += records.team2score;
+            record[records.team1-65].GD -= records.tempav;
+            record[records.team2-65].GD += records.tempav;
+            record[records.team1-65].L += 1;
+            record[records.team2-65].W += 1;
+            record[records.team1-65].MP += 1;
+            record[records.team2-65].MP += 1;
+            record[records.team1-65].PTS += records.lost;
+            record[records.team2-65].PTS += records.win;
+            record[records.team1-65].GA += records.team2score;
+            record[records.team2-65].GA += records.team1score;
+        }//end of if of team1score < team2score
+        else if(records.team1score == records.team2score){//if of team1score = team2score
+            record[records.team1-65].GF += records.team1score;
+            record[records.team2-65].GF += records.team2score;
+            record[records.team1-65].D += 1;
+            record[records.team2-65].D += 1;
+            record[records.team1-65].MP += 1;
+            record[records.team2-65].MP += 1;
+            record[records.team1-65].PTS += records.drawn;
+            record[records.team2-65].PTS += records.drawn;
+            record[records.team1-65].GA += records.team2score;
+            record[records.team2-65].GA += records.team1score;
+        }//end of if of team1score > team2score
+        //break;
+    }//end of if of there are not an error
+}
