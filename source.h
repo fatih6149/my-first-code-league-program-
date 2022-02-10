@@ -75,3 +75,54 @@ int display_menu(){//menu selections
     }//end of while of error
     return selection;
 }
+
+void league_settings(){//changing the league settings
+
+    int selection;
+    int match_set[4];
+
+    printf("===============================\nTo change the settings from file (setting.txt): 1\n");
+    printf("To change the settings from keyboard: 2\n");
+    printf("Enter a choice: ");
+    scanf("%d",&selection);
+
+    while (selection != 1 && selection !=2){//not pressing 1 or 2, it will give an error
+        printf("===============================\nYou pressed wrongly!!!\n");
+        printf("===============================\nEnter: 1 or 2\n");
+        scanf(" %d", &selection);
+    }
+
+    if (selection == 1){
+        FILE *fp;
+        fp=fopen("setting.txt","r");
+
+      if (fp == NULL){
+                                                                   //check file existing
+        printf("Unable to open the file.\nPlease create a file and try again.");
+        exit(1);
+      }
+
+      int i;
+      for(i=0;i<4;i++){//read and save league settings from the file to the (int match_set[4])
+        fscanf(fp,"%d",&match_set[i]);
+        }//end of for
+        records.teams_number=match_set[0];                //set team number
+        records.win=match_set[1];                         //set win
+        records.lost=match_set[2];                        //set lost
+        records.drawn=match_set[3];                       //set drawn
+        printf("===============================\n");
+    }
+
+    if(selection == 2){
+        printf("===============================\nSet the settings:");
+        printf("\nTeams number = ");
+        scanf("%d", &records.teams_number);
+        printf("For winning  = ");
+        scanf("%d", &records.win);
+        printf("For losing   = ");
+        scanf("%d", &records.lost);
+        printf("For drawing  = ");
+        scanf("%d", &records.drawn);
+        printf("===============================\n");
+    }
+}

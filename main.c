@@ -17,6 +17,12 @@ int main(){
         printf("Teams number = %d\nFor winning  = %d\nFor losing   = %d\nFor drawing  = %d\n", records.teams_number, records.win, records.lost, records.drawn);
         selection = display_menu();
 
+        switch (selection)
+        {
+            case 1: league_settings();
+            break;
+        }
+
     }while(selection != 5);
 
     return 0;
