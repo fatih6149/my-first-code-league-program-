@@ -10,5 +10,14 @@ int main(){
     teams_file();
     teams_file_point();
 
+    records.counter=0;
+    int selection;
+
+    do{
+        printf("Teams number = %d\nFor winning  = %d\nFor losing   = %d\nFor drawing  = %d\n", records.teams_number, records.win, records.lost, records.drawn);
+        selection = display_menu();
+
+    }while(selection != 5);
+
     return 0;
 }

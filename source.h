@@ -56,3 +56,22 @@ void teams_file_point(){
         fscanf(fp1,"%s",record[i].longname_point);
 
 }
+
+int display_menu(){//menu selections
+    int selection;
+    printf("===============================\n");
+    printf("To change the settings: 1\n");
+    printf("To enter the fixtures: 2\n");
+    printf("TO see the table alphabetically: 3\n");
+    printf("TO see the table in order of points: 4\n");
+    printf("To exit: 5\n===============================");
+    printf("\nEnter a choice: ");
+    scanf("%d", &selection);
+    while (selection != 1 && selection !=2 && selection !=3 && selection !=4 && selection !=5){//not pressing 1,2,3,4, or 5, it will give an error
+        printf("===============================\nYou pressed wrongly!!!\n");
+        printf("===============================\nEnter a choice: ");
+        scanf("%d", &selection);
+        getchar();
+    }//end of while of error
+    return selection;
+}
