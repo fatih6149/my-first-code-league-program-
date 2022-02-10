@@ -23,6 +23,8 @@ int main(){
             break;
             case 2: fixtures();
             break;
+            case 3: table_alphabetically();
+            break;
         }
 
     }while(selection != 5);

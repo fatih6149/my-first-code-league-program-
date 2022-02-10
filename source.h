@@ -248,3 +248,22 @@ void update_table_score(int i){
         //break;
     }//end of if of there are not an error
 }
+
+void table_alphabetically(){//sorting the table alphabetically
+    printf("===============================\n");
+    printf("\t\t\t\tLEAGUE TABLE\t\t\t\t\n");
+    printf("============================================================================\n");
+    printf("AN   CLUBS        MP   \tW\tD\tL\tGF\tGA\tGD\tPTS\n");
+    printf("============================================================================\n");
+    int i;
+    for(i = 0; i < records.teams_number; i++){
+        printf("%c    %s", i+65, record[i].longname);
+        int l = 0;
+        while(record[i].longname[l++] != '\0');//counting team's character
+        int s;
+        for(s = l; s < 12; ++s)//putting space after team's character
+            printf(" ");
+        printf("  %d   \t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", record[i].MP, record[i].W, record[i].D, record[i].L, record[i].GF, record[i].GA, record[i].GD, record[i].PTS);
+    }
+    printf("============================================================================\n");
+}
