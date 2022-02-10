@@ -25,6 +25,8 @@ int main(){
             break;
             case 3: table_alphabetically();
             break;
+            case 4: table_in_order_of_points();
+            break;
         }
 
     }while(selection != 5);

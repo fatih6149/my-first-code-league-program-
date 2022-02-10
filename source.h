@@ -267,3 +267,74 @@ void table_alphabetically(){//sorting the table alphabetically
     }
     printf("============================================================================\n");
 }
+
+void table_in_order_of_points(){//sorting table in order of points
+
+    char TEAMS[26] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+	int i;
+	int j;
+    for (i = 0; i < records.teams_number; i++){//bubble sort
+        for(j = 0; j < records.teams_number -i; j++){
+            if(record[j].PTS < record[j+1].PTS){
+
+                int temp = record[j].PTS;
+                record[j].PTS = record[j+1].PTS;
+                record[j+1].PTS = temp;//order of points
+
+                char temp1 = TEAMS[j];
+                TEAMS[j] = TEAMS[j+1];
+                TEAMS[j+1] = temp1;//Order of aliases
+
+                char temp2[12];
+                strcpy(temp2,record[j].longname_point);
+                strcpy(record[j].longname_point, record[j+1].longname_point);
+                strcpy(record[j+1].longname_point, temp2);
+
+                temp = record[j].GD;
+                record[j].GD = record[j+1].GD;
+                record[j+1].GD = temp;//order of GD
+
+                temp = record[j].GA;
+                record[j].GA = record[j+1].GA;
+                record[j+1].GA = temp;//order of GA
+
+                temp = record[j].GF;
+                record[j].GF = record[j+1].GF;
+                record[j+1].GF = temp;//order of GF
+
+                temp = record[j].L;
+                record[j].L = record[j+1].L;
+                record[j+1].L = temp;//order of L
+
+                temp = record[j].D;
+                record[j].D = record[j+1].D;
+                record[j+1].D = temp;//order of D
+
+                temp = record[j].W;
+                record[j].W = record[j+1].W;
+                record[j+1].W = temp;//order of W
+
+                temp = record[j].MP;
+                record[j].MP = record[j+1].MP;
+                record[j+1].MP = temp;//order of MP
+
+            }//end of if order
+        }//end of j for order
+    }//end of i for order
+    printf("===============================\n");
+    printf("\t\t\t\tLEAGUE TABLE\t\t\t\t\n");
+    printf("============================================================================\n");
+    printf("AN   CLUBS        MP   \tW\tD\tL\tGF\tGA\tGD\tPTS\n");
+    printf("============================================================================\n");
+    int t;
+    int s;
+    for(t = 0; t < records.teams_number; t++){
+        printf("%c    %s", TEAMS[t], record[t].longname_point);
+        int l = 0;
+        while(record[t].longname_point[l++] != '\0');//counting team's character
+        for(s = l; s < 12; ++s)//putting space after team's character
+            printf(" ");
+        printf("  %d   \t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", record[t].MP, record[t].W, record[t].D, record[t].L, record[t].GF, record[t].GA, record[t].GD, record[t].PTS);
+    }
+    printf("============================================================================\n");
+}
